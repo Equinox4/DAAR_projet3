@@ -17,13 +17,6 @@ public class Utils {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, encoding);
     }
-    /*
-    public static File multipartToFile(MultipartFile multipart, String fileName) throws IllegalStateException, IOException {
-        File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+fileName);
-        multipart.transferTo(convFile);
-        return convFile;
-    }
-    */
 
      public static File multipartToFile(MultipartFile file) throws IOException {
         File convFile = new File( file.getOriginalFilename() );
@@ -39,5 +32,4 @@ public class Utils {
         jsonMap.put("text", profileDocument.getText());
         return jsonMap;
     }
-
 }

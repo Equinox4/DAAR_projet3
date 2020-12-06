@@ -17,8 +17,7 @@ public class Profile {
     @Id
     @Generated
     private String id;
-    
+
     @Field(type = FieldType.Text)
     private String text;
-
 }

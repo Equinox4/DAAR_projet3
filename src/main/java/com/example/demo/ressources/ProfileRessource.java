@@ -3,17 +3,8 @@ package com.example.demo.ressources;
 import com.google.gson.Gson;
 
 import org.apache.commons.codec.Charsets;
-import org.apache.pdfbox.cos.COSDocument;
-import org.apache.pdfbox.pdfparser.PDFParser;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
 import org.xml.sax.ContentHandler;
 
-import org.apache.tika.config.TikaConfig;
-import org.apache.tika.io.TikaInputStream;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.ParseContext;
-import org.apache.tika.sax.BodyContentHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,31 +39,10 @@ public class ProfileRessource {
 
     private Gson gs;
 
-    /*
-    @GetMapping("/")
-    public ResponseEntity<List<Profile>> getProfiles() throws Exception {
-        return ResponseEntity.ok(profileService.getProfiles());
-    }
-    */
-    /*
-    @PostMapping("/")
-    public ResponseEntity<Profile> createProfile(@RequestBody Profile profile) {
-        return ResponseEntity.created(URI.create("/profiles"))
-                .body(profileService.createProfile(profile));
-    }
-    */
-
     @GetMapping("/search")
     public ResponseEntity<List<Profile>> findProfileKeyWords(@RequestParam(value = "text") String keyword) throws Exception {
         return ResponseEntity.ok(profileService.getProfilesByKeyWord(keyword));
     }
-
-    /*
-    @GetMapping("/{id}")
-    public ResponseEntity<List<Profile>> findProfileById(@PathVariable Long id) throws Exception {
-        return ResponseEntity.ok(profileService.getProfiles());
-    }
-     */
 
     @GetMapping("/liste_cv")
     public String findByText(@RequestParam(value = "text") String text) throws Exception {
@@ -118,24 +88,11 @@ public class ProfileRessource {
         String parsedText = "y a rien DDDD:";
 
         if (mime.contains("image")) {
-            /*
-            Tesseract tesseract = Tesseract.getInstance();
-            try {
-                tesseract.setDatapath("Tess4J/tessdata");
-                parsedText = tesseract.doOCR(new File("L3.jpeg"));
-            }
-            catch (TesseractException e) {
-                e.printStackTrace();
-            }
-             */
             String commande_tesseract = "tesseract " + file.getAbsolutePath() + " -";
             Process p = Runtime.getRuntime().exec(commande_tesseract);
-            
+
             BufferedReader stdInput = new BufferedReader(new
                     InputStreamReader(p.getInputStream()));
-
-            BufferedReader stdError = new BufferedReader(new
-                    InputStreamReader(p.getErrorStream()));
 
             // read the output from the command
             String s;
@@ -145,19 +102,6 @@ public class ProfileRessource {
         }
         else { // pdf & word
             parsedText = textFromDoc(file);
-
-            /*
-            PDFParser parser = null;
-            PDDocument pdDoc = null;
-            COSDocument cosDoc = null;
-            PDFTextStripper pdfStripper;
-
-            PDDocument document = PDDocument.load(file);
-            PDFTextStripper pdfTextStripper = new PDFTextStripper();
-            pdfTextStripper.setStartPage(1);
-            pdfTextStripper.setEndPage(5);
-            parsedText  = pdfTextStripper.getText(document);
-            */
         }
 
         Profile profile = new Profile("" + System.currentTimeMillis(), parsedText);
@@ -171,47 +115,9 @@ public class ProfileRessource {
             e.printStackTrace();
             web_page = "y a rien dsl";
         }
+
         boolean is_added = reponse_serv.toString().contains("201");
 
         return web_page.replace("<!--REPONSE-->", is_added ? "<strong>CV ajouté avec succes ! \\o/</strong>" : "ERREUR (╯°□°)╯︵ ┻━┻");
     }
-
-
-/*
-    @PutMapping
-    public ResponseEntity updateProfile(@RequestBody ProfileDocument document) throws Exception {
-
-        return new ResponseEntity(service.updateProfile(document), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/{id}")
-    public ProfileDocument findById(@PathVariable String id) throws Exception {
-
-        return service.findById(id);
-    }
-
-    @GetMapping
-    public List<ProfileDocument> findAll() throws Exception {
-
-        return service.findAll();
-    }
-
-    @GetMapping(value = "/search")
-    public List<ProfileDocument> search(@RequestParam(value = "technology") String technology) throws Exception {
-        return service.searchByTechnology(technology);
-    }
-
-    @GetMapping(value = "/api/v1/profiles/name-search")
-    public List<ProfileDocument> searchByName(@RequestParam(value = "name") String name) throws Exception {
-        return service.findProfileByName(name);
-    }
-
-
-    @DeleteMapping("/{id}")
-    public String deleteProfileDocument(@PathVariable String id) throws Exception {
-
-        return service.deleteProfileDocument(id);
-
-    }
-*/
 }

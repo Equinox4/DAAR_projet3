@@ -2,9 +2,6 @@ package com.example.demo.util;
 
 /*
  * This class is used to read .doc and .docx files
- *
- * @author Developer
- *
  */
 
 import java.io.ByteArrayOutputStream;
@@ -65,16 +62,4 @@ public class TextExtractor {
         }
         return textExtractor.outputstream.toString();
     }
-    /*
-    public static void main(String args[]) throws Exception {
-        if (args.length == 1) {
-            TextExtractor textExtractor = new TextExtractor();
-            textExtractor.process(args[0]);
-            textExtractor.getString();
-        } else {
-            throw new Exception();
-        }
-    }
-
-     */
 }

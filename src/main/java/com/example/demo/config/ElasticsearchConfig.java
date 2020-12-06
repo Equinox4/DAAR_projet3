@@ -20,7 +20,7 @@ public class ElasticsearchConfig {
 
     @Value("${elasticsearch.port}")
     private int port;
-    
+
     @Value("${elasticsearch.username}")
     private String userName;
 
