@@ -40,12 +40,20 @@ public class ProfileService {
         return executeQuery(searchSourceBuilder);
     }
     
-    public List<Profile> getProfiles(String keyword) throws IOException {
-         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
-                .size(50)
-                .query(QueryBuilders.matchQuery("firstName", keyword))
-                .query(QueryBuilders.matchQuery("lastName", keyword));
-        
+    public List<Profile> getProfilesByKeyWord(String keyword) throws IOException {
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().size(50);
+
+
+        if (keyword.indexOf(' ') > 0) {
+            String[] keywords = keyword.split(" ");
+            for (String word : keywords) {
+                searchSourceBuilder.query(QueryBuilders.regexpQuery("text", ".*" + word + ".*"));
+            }
+        }
+        else {
+            searchSourceBuilder.query(QueryBuilders.regexpQuery("text", ".*" + keyword.toLowerCase() + ".*"));
+        }
+
         return executeQuery(searchSourceBuilder);
     }
     

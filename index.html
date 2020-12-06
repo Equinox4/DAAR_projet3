@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <body>
+
+        <form action="/" method="post" enctype="multipart/form-data" class="cadre_envoi">
+            <input type="file" name="file" id="fileToUpload">
+            <input type="submit" value="Envoyer CV" name="submit" class="bouton">
+        </form>
+
+        <form action="/liste_cv" method="get" class="cadre_recherche">
+            <input type="text" class="barre_recherche" name="text" required>
+            <input type="submit" class="bouton" value="Rechercher">
+        </form>
+        <br><br>
+        
+
+        <!--REPONSE-->
+
+    </body>
+
+
+    <style>
+
+        body {
+            background-color: #e2e2e2;
+            padding: 50px;
+            font-family: roboto;
+            font-size: small;
+        }
+
+        strong {
+            margin: auto;
+            display: block;
+            width: -moz-fit-content;
+            width: fit-content;
+        }
+
+        .case_resultat {
+            border-radius: 5px;
+            box-shadow: 0px 10px 40px -3px #737373;
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            font-family: roboto;
+            font-size: small;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .cadre_envoi {
+            margin: auto;
+            display: block;
+            width: -moz-fit-content;
+            width: fit-content;
+            margin-bottom: 50px;
+            background-color: rgb(238, 238, 238);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .cadre_recherche {
+            margin: auto;
+            display: block;
+            width: -moz-fit-content;
+            width: fit-content;
+        }
+
+        .barre_recherche {
+            background-color: white;
+            border-radius: 100px;
+            border: none;
+            padding: 10px;
+            outline: none;
+        }
+
+        .bouton {
+            background-color: white;
+            border-radius: 100px;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+    </style>
+</html>
